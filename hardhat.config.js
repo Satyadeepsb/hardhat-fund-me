@@ -17,7 +17,7 @@ module.exports = {
     networks: {
         goerli: {
             url: GOERIL_RPC_URL,
-            accounts: [],
+            accounts: [PRIVATE_KEY], // Metamask Account's PRIVATE_KEY
             chainId: 5,
         },
         localhost: {
