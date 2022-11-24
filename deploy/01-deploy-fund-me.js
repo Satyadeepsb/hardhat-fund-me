@@ -38,11 +38,13 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     const args = [ethUsdPriceFeedAddress]
     //
     log(`deployer ${deployer}`)
+    log(`Deploying FundMe...`)
     const fundMe = await deploy("FundMe", {
         from: deployer,
         contract: "FundMe",
         args: args,
         log: true,
+        waitConformations: network.config.blockConformations || 1,
     })
     if (
         !developementChains.includes(network.name) &&
