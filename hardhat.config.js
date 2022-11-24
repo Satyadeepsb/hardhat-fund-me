@@ -25,7 +25,10 @@ module.exports = {
             chainId: 31337,
         },
     },
-    solidity: "0.8.17",
+    // solidity: "0.8.17",
+    solidity: {
+        compilers: [{ version: "0.8.17" }, { version: "0.6.6" }],
+    },
     etherscan: {
         apiKey: ETHER_SCAN_API_KEY,
     },
