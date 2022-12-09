@@ -1,14 +1,24 @@
 // SPDX-License-Identifier: MIT
+// Pragma
 pragma solidity ^0.8.9;
-
+// Imports
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "./PriceConverter.sol";
+// Error Codes
+error FundMe_NotOwner();
 
-error NotOwner();
+// Interfaces, Libraries, Contracts
 
+/** @title A contract for crowd funding
+ *  @author Satyadeep Basugade
+ *  @notice This contract is to demo a sample funding contract
+ *  @dev This implments price feeds as our library
+ */
 contract FundMe {
+    // Type Declarations
     using PriceConverter for uint256;
 
+    // State Variables
     mapping(address => uint256) public addressToAmountFunded;
     address[] public funders;
     AggregatorV3Interface public priceFeed;
@@ -16,10 +26,34 @@ contract FundMe {
     // Could we make this constant?  /* hint: no! We should make it immutable! */
     address public /* immutable */ i_owner;
     uint256 public constant MINIMUM_USD = 50 * 10 ** 18;
+
+    // Modifiers    
+    modifier onlyOwner {
+        // require(msg.sender == owner);
+        if (msg.sender != i_owner) revert FundMe_NotOwner();
+        _;
+    }
+    // Function Order:
+    // constructor
+    // receive
+    // fallback
+    // external
+    // public
+    // internal
+    // private
+    // view / pure
     
     constructor(address priceFeedAddress) {
         i_owner = msg.sender;
         priceFeed = AggregatorV3Interface(priceFeedAddress);
+    }
+
+    receive() external payable {
+        fund();
+    }
+    
+    fallback() external payable {
+        fund();
     }
 
     function fund() public payable {
@@ -35,11 +69,7 @@ contract FundMe {
         return priceFeed.version();
     }
     
-    modifier onlyOwner {
-        // require(msg.sender == owner);
-        if (msg.sender != i_owner) revert NotOwner();
-        _;
-    }
+  
     
     function withdraw() public onlyOwner {
         for (uint256 funderIndex=0; funderIndex < funders.length; funderIndex++){
@@ -68,13 +98,6 @@ contract FundMe {
     //  /        \
     //receive()  fallback()
 
-    fallback() external payable {
-        fund();
-    }
-
-    receive() external payable {
-        fund();
-    }
 
 }
 
