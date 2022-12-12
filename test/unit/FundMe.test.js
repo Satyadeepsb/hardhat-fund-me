@@ -1,5 +1,5 @@
 const { deployments, ethers, getNamedAccounts } = require("hardhat")
-const { assert } = require("chai")
+const { assert, expect } = require("chai")
 
 describe("FundMe", async function () {
     let fundMe
@@ -28,6 +28,14 @@ describe("FundMe", async function () {
         it("sets the aggregator addresses correctly", async function () {
             const response = await fundMe.priceFeed()
             assert.equal(response, mockV3Aggregator.address)
+        })
+    })
+
+    describe("fund", async function () {
+        it("Fails if you don't send enough ETH", async function () {
+            await expect(fundMe.fund()).to.be.revertedWith(
+                "You need to spend more ETH!"
+            )
         })
     })
 })
