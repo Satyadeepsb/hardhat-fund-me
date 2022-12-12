@@ -46,5 +46,10 @@ describe("FundMe", async function () {
             console.log(`sendValue.toString() ${sendValue.toString()}`)
             assert.equal(response.toString(), sendValue.toString())
         })
+        it("Add funder to array of funders", async function () {
+            await fundMe.fund({ value: sendValue })
+            const funder = await fundMe.funders(0)
+            assert.equal(funder, deployer)
+        })
     })
 })
