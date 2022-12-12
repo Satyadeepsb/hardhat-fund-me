@@ -5,6 +5,7 @@ describe("FundMe", async function () {
     let fundMe
     let deployer
     let mockV3Aggregator
+    const sendValue = ethers.utils.parseEther("1") // 1000000000000000000 // 1 ETH
     beforeEach(async function () {
         // deploy our FundMe contract
         // using Hardhat-deploy
@@ -36,6 +37,14 @@ describe("FundMe", async function () {
             await expect(fundMe.fund()).to.be.revertedWith(
                 "You need to spend more ETH!"
             )
+        })
+
+        it("updated the amount funded data structure", async function () {
+            await fundMe.fund({ value: sendValue })
+            const response = await fundMe.addressToAmountFunded(deployer)
+            console.log(`response.toString() ${response.toString()}`)
+            console.log(`sendValue.toString() ${sendValue.toString()}`)
+            assert.equal(response.toString(), sendValue.toString())
         })
     })
 })
