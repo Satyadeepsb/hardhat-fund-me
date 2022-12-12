@@ -5,7 +5,7 @@ pragma solidity ^0.8.9;
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "./PriceConverter.sol";
 // Error Codes
-error FundMe__NotOwner("ABC");
+error FundMe__NotOwner();
 
 // Interfaces, Libraries, Contracts
 
