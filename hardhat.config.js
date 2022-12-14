@@ -34,12 +34,12 @@ module.exports = {
         apiKey: ETHER_SCAN_API_KEY,
     },
     gasReporter: {
-        enabled: false,
+        enabled: true,
         outputFile: "gas-report.txt",
         noColors: true,
         currency: "USD", // INR
-        // coinmarketcap: COINMARKETCAP_API_KEY, // https://coinmarketcap.com/api
-        // token: "ETH", // Ethereum:ETH (default), Binance:BNB, Polygon:MATIC, Avalanche:AVAX, Heco:HT, Moonriver:MOVR
+        coinmarketcap: COINMARKETCAP_API_KEY, // https://coinmarketcap.com/api
+        token: "ETH", // Ethereum:ETH (default), Binance:BNB, Polygon:MATIC, Avalanche:AVAX, Heco:HT, Moonriver:MOVR
     },
     namedAccounts: {
         deployer: {
