@@ -19,12 +19,12 @@ contract FundMe {
     using PriceConverter for uint256;
 
     // State Variables
-    mapping(address => uint256) public s_addressToAmountFunded;
-    address[] public s_funders;
-    AggregatorV3Interface public s_priceFeed;
+    mapping(address => uint256) private s_addressToAmountFunded;
+    address[] private s_funders;
+    AggregatorV3Interface private s_priceFeed;
 
     // Could we make this constant?  /* hint: no! We should make it immutable! */
-    address public immutable i_owner;
+    address private immutable i_owner;
     uint256 public constant MINIMUM_USD = 50 * 10 ** 18;
 
     // Modifiers
@@ -70,7 +70,7 @@ contract FundMe {
     function getVersion() public view returns (uint256) {
         // ETH/USD price feed address of Goerli Network.
         // AggregatorV3Interface s_priceFeed = AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e);
-        return s_priceFeed.version();
+        return getPriceFeed().version();
     }
 
     function withdraw() public onlyOwner {
@@ -108,6 +108,24 @@ contract FundMe {
         s_funders = new address[](0);
         (bool success, ) = i_owner.call{value: address(this).balance}("");
         require(success, "Call cheaperWithdraw failed");
+    }
+
+    function getAddressToAmountFunded(
+        address funder
+    ) public view returns (uint256) {
+        return s_addressToAmountFunded[funder];
+    }
+
+    function getFunder(uint256 index) public view returns (address) {
+        return s_funders[index];
+    }
+
+    function getPriceFeed() public view returns (AggregatorV3Interface) {
+        return s_priceFeed;
+    }
+
+    function getOwner() public view returns (address) {
+        return i_owner;
     }
 
     // Explainer from: https://solidity-by-example.org/fallback/
