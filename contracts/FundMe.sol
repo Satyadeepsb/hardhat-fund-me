@@ -116,6 +116,8 @@ contract FundMe {
         return s_addressToAmountFunded[funder];
     }
 
+    // view/Pure functions
+
     function getFunder(uint256 index) public view returns (address) {
         return s_funders[index];
     }
