@@ -1,4 +1,8 @@
 {
+  "name": "hardhat-fund-me",
+  "author": {
+    "name": "Satyadeep Basugade"
+  },
   "devDependencies": {
     "@chainlink/contracts": "^0.5.1",
     "@ethersproject/abi": "^5.4.7",
@@ -18,5 +22,13 @@
     "prettier-plugin-solidity": "^1.0.0-rc.1",
     "solidity-coverage": "^0.8.0",
     "typechain": "^8.1.0"
+  },
+  "scripts": {
+    "test": "hardhat test",
+    "test:staging": "hardhat test --network goerli",
+    "lint": "solhint 'contracts/**/*.sol'",
+    "lint:fix": "solhint 'contracts/**/*.sol' --fix",
+    "format": "prettier --write .",
+    "coverage": "hardhat coverage"
   }
 }
