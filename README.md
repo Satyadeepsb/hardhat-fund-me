@@ -5,7 +5,6 @@
 - [Getting Started](#getting-started)
   - [Requirements](#requirements)
   - [Quickstart](#quickstart)
-  - [Typescript](#typescript)
 - [Usage](#usage)
   - [Testing](#testing)
     - [Test Coverage](#test-coverage)
@@ -41,13 +40,6 @@ cd hardhat-fund-me
 yarn
 ```
 
-## Typescript
-
-For the typescript edition, run:
-
-```
-git checkout typescript
-```
 
 # Usage
 
